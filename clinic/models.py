@@ -5,13 +5,17 @@ from django.db import models
 class Doctor(AbstractUser):
     specialization = models.CharField(max_length=255)
     years_of_experience = models.PositiveIntegerField(default=0)
-    license_number = models.CharField(max_length=20, unique=True)
+    patients = models.ManyToManyField(
+        "Patient",
+        through="Appointment",
+        related_name="doctors"
+    )
 
     class Meta:
         ordering = ["first_name", "last_name"]
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name} ({self.specialization})"
 
 
 class Patient(models.Model):
@@ -19,10 +23,6 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=255)
     birth_date = models.DateField()
     phone_number = models.CharField(max_length=20, unique=True)
-    doctors = models.ManyToManyField(
-        Doctor,
-        related_name="patients"
-    )
 
     class Meta:
         ordering = ["first_name", "last_name"]
@@ -63,3 +63,6 @@ class CTScan(models.Model):
 
     class Meta:
         ordering = ["scan_date"]
+
+    def __str__(self):
+        return f"CT Scan #{self.id} - {self.patient}"
