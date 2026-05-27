@@ -58,11 +58,14 @@ class CTScan(models.Model):
         on_delete=models.CASCADE,
         related_name="ct_scans"
     )
+    image = models.ImageField(
+        upload_to="ct_scan/"
+    )
     scan_date = models.DateTimeField()
     description = models.TextField(max_length=255, blank=True, default="-")
 
     class Meta:
-        ordering = ["scan_date"]
+        ordering = ["-scan_date"]
 
     def __str__(self):
         return f"CT Scan #{self.id} - {self.patient}"
