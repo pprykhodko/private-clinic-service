@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.html import mark_safe
 
 
 class Doctor(AbstractUser):
@@ -66,6 +67,24 @@ class CTScan(models.Model):
 
     class Meta:
         ordering = ["-scan_date"]
+        verbose_name = "CT Scan"
+        verbose_name_plural = "CT Scans"
+
+    def detail_image_preview(self):
+        return mark_safe(
+            f"<img src='{self.image.url}' "
+            f"alt='' "
+            f"width='{self.image.width}' "
+            f"height='{self.image.height}'>"
+        )
+
+    def list_image_preview(self):
+        return mark_safe(
+            f"<img src='{self.image.url}' "
+            f"alt='' "
+            f"width='195' "
+            f"height='160' "
+        )
 
     def __str__(self):
         return f"CT Scan #{self.id} - {self.patient}"
