@@ -1,4 +1,6 @@
+from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.html import mark_safe
 
@@ -48,6 +50,25 @@ class Appointment(models.Model):
 
     class Meta:
         ordering = ["appointment_date"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["doctor", "appointment_date"],
+                name="unique_appointment"
+            )
+        ]
+
+    def clean(self):
+        if self.doctor and self.appointment_date:
+            time_conflict = Appointment.objects.filter(
+                doctor=self.doctor,
+                appointment_date__gt=self.appointment_date - timedelta(minutes=10),
+                appointment_date__lt=self.appointment_date + timedelta(minutes=10)
+            ).exclude(pk=self.pk)
+
+            if time_conflict.exists():
+                raise ValidationError(
+                    "This doctor already has an appointment within 10 minutes"
+                )
 
     def __str__(self):
         return f"({self.appointment_date:%d.%m.%Y}) {self.patient}"
