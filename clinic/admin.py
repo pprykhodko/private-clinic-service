@@ -24,6 +24,8 @@ class DoctorAdmin(UserAdmin):
           {
               "fields":
                   (
+                      "first_name",
+                      "last_name",
                       "specialization",
                       "years_of_experience",
                   )
