@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Private Clinic Service</h1>
+  <p>Manage patients, appointments and CT Scans in one place</p>
+  <h2>Welcome back, {{ user.username }}</h2>
+  <ul>
+    <li><strong>Doctors:</strong> {{ num_doctors }}</li>
+    <li><strong>Patients:</strong> {{ num_patients }}</li>
+    <li><strong>Appointments:</strong> {{ num_appointments }}</li>
+    <li><strong>CT Scans:</strong> {{ num_images }}</li>
+  </ul>
+{% endblock %}

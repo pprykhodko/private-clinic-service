@@ -1,0 +1,24 @@
+<ul class="sidebar-nav list-group">
+  {% if user.is_authenticated %}
+    <li class="list-group-item">
+      User:
+      <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a>
+    </li>
+
+    <li class="list-group-item">
+      <form action="{% url "logout" %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Logout</button>
+      </form>
+    </li>
+  {% else %}
+    <li class="list-group-item"><a href="{% url "login" %}?next={{request.path}}">Login</a></li>
+  {% endif %}
+
+  <br>
+
+  <li class="list-group-item mt-3"><a href="{% url "clinic:index" %}">Home</a></li>
+  <li class="list-group-item"><a href="{% url "clinic:doctor-list" %}">All doctors</a></li>
+  <li class="list-group-item"><a href="#">All patients</a></li>
+  <li class="list-group-item"><a href="#">All appointments</a></li>
+</ul>
