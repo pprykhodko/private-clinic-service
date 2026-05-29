@@ -24,3 +24,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class DoctorListView(LoginRequiredMixin, generic.ListView):
     model = Doctor
+
+
+class PatientListView(LoginRequiredMixin, generic.ListView):
+    model = Patient
