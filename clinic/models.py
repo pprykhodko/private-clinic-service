@@ -1,8 +1,21 @@
 from datetime import timedelta
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.html import mark_safe
+
+
+name_validator = RegexValidator(
+    regex=r"^[A-Za-zА-Яа-яІіЇїЄє'-]+$",
+    message="Name can contain only letters, apostrophes and hyphens."
+)
+
+phone_validator = RegexValidator(
+    regex=r"^\+380\d{9}$",
+    message="Phone number must be in format +380XXXXXXXXX"
+)
 
 
 class Doctor(AbstractUser):
@@ -22,16 +35,20 @@ class Doctor(AbstractUser):
 
 
 class Patient(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, validators=[name_validator])
+    last_name = models.CharField(max_length=255, validators=[name_validator])
     birth_date = models.DateField()
-    phone_number = models.CharField(max_length=20, unique=True)
+    phone_number = models.CharField(max_length=20, unique=True, validators=[phone_validator])
+    diagnosis = models.TextField(max_length=255, default="-")
 
     class Meta:
-        ordering = ["first_name", "last_name"]
+        ordering = ["birth_date"]
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("clinic:patient-detail", kwargs={"pk": self.pk})
 
 
 class Appointment(models.Model):
