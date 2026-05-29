@@ -22,9 +22,6 @@
           <td>{{ patient.id }}</td>
           <td>
             <a href="{{ patient.get_absolute_url }}">{{ patient.first_name }} {{ patient.last_name }}
-              {% if user == patient %}
-                (Me)
-              {% endif %}
             </a>
           </td>
           <td>{{ patient.birth_date }}</td>
