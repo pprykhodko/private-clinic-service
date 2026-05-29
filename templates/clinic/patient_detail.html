@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ patient.first_name }} {{ patient.last_name }}
+    <a href="{% url 'clinic:patient-delete' pk=patient.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="{% url 'clinic:patient-update' pk=patient.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+
+  <hr>
+  <p><strong>First name:</strong> {{ patient.first_name }}</p>
+  <p><strong>Last name:</strong> {{ patient.last_name }}</p>
+  <p><strong>Birth Date:</strong> {{ patient.birth_date }}</p>
+  <p><strong>Phone Number:</strong> {{ patient.phone_number }}</p>
+
+  <h4><strong>Diagnosis:</strong></h4>
+  <hr>
+  {{ patient.diagnosis }}
+{% endblock %}

@@ -1,20 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Patient List</h1>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="m-0">Patient List</h1>
+
+    <a href="{% url 'clinic:patient-create' %}" class="btn btn-primary">
+      Create
+    </a>
+  </div>
 
   {% if patient_list %}
     <table class="table">
       <tr>
         <th>ID</th>
-        <th>Full name</th>
-        <th>Birthdate</th>
-        <th>Phone number</th>
+        <th>Full Name</th>
+        <th>Birth Date</th>
+        <th>Phone Number</th>
       </tr>
       {% for patient in patient_list %}
         <tr>
           <td>{{ patient.id }}</td>
-          <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+          <td>
+            <a href="{{ patient.get_absolute_url }}">{{ patient.first_name }} {{ patient.last_name }}
+              {% if user == patient %}
+                (Me)
+              {% endif %}
+            </a>
+          </td>
           <td>{{ patient.birth_date }}</td>
           <td>{{ patient.phone_number }}</td>
         </tr>

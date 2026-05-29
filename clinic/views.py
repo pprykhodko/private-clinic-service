@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
+from clinic.forms import PatientForm
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
 
@@ -28,3 +30,24 @@ class DoctorListView(LoginRequiredMixin, generic.ListView):
 
 class PatientListView(LoginRequiredMixin, generic.ListView):
     model = Patient
+
+
+class PatientCreateView(LoginRequiredMixin, generic.CreateView):
+    model =Patient
+    form_class = PatientForm
+    success_url = reverse_lazy("clinic:patient-list")
+
+
+class PatientDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Patient
+
+
+class PatientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Patient
+    fields = "__all__"
+    success_url = reverse_lazy("clinic:patient-list")
+
+
+class PatientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Patient
+    success_url = reverse_lazy("clinic:patient-list")
