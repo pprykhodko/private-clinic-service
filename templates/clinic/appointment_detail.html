@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Appointment #{{ appointment.id }}
+    <a href="#" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="#" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+
+  <hr>
+  <h2>Patient:</h2>
+  <p>First name: {{ appointment.patient.first_name }}</p>
+  <p>Last name: {{ appointment.patient.last_name }}</p>
+  <p>Phone Number: {{ appointment.patient.phone_number }}</p>
+
+  <hr>
+  <h2>Doctor:</h2>
+  <p>First name: {{ appointment.doctor.first_name }}</p>
+  <p>Last name: {{ appointment.doctor.last_name }}</p>
+  
+  <hr>
+  <h2>Details:</h2>
+  <p>Scheduled Time: {{ appointment.appointment_date }}</p>
+  <p>Notes: {{ appointment.notes }}</p>
+{% endblock %}

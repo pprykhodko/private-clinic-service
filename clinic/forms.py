@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django import forms
 
-from clinic.models import Patient
+from clinic.models import Patient, Appointment
 
 
 class PatientForm(forms.ModelForm):
@@ -37,3 +37,18 @@ class PatientForm(forms.ModelForm):
                 "Patient age seems unrealistic."
             )
         return birth_date
+
+
+class AppointmentForm(forms.ModelForm):
+    appointment_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "form-control",
+                "type": "datetime-local",
+            },
+        )
+    )
+
+    class Meta:
+        model = Appointment
+        fields = "__all__"
