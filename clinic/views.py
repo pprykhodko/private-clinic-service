@@ -33,7 +33,7 @@ class PatientListView(LoginRequiredMixin, generic.ListView):
 
 
 class PatientCreateView(LoginRequiredMixin, generic.CreateView):
-    model =Patient
+    model = Patient
     form_class = PatientForm
     success_url = reverse_lazy("clinic:patient-list")
 
@@ -51,3 +51,7 @@ class PatientUpdateView(LoginRequiredMixin, generic.UpdateView):
 class PatientDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Patient
     success_url = reverse_lazy("clinic:patient-list")
+
+
+class AppointmentListView(LoginRequiredMixin, generic.ListView):
+    model = Appointment
