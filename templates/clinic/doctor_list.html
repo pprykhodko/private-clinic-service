@@ -15,7 +15,11 @@
       {% for doctor in doctor_list %}
         <tr>
           <td>{{ doctor.id }}</td>
-          <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+          <td>{{ doctor.first_name }} {{ doctor.last_name }}
+            {% if user == doctor %}
+              (Me)
+            {% endif %}
+          </td>
           <td>{{ doctor.username }}</td>
           <td>{{ doctor.specialization }}</td>
           <td>{{ doctor.years_of_experience }}</td>

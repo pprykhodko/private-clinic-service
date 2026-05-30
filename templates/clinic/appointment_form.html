@@ -8,6 +8,6 @@
     {{ form|crispy }}
 
     <input type="submit" value="Submit" class="btn btn-primary">
-    <a href="{% url 'clinic:appointment-detail' pk=appointment.id %}" class="btn btn-secondary">Cancel</a>
+    <a href="{% url "clinic:appointment-detail" pk=appointment.id %}" class="btn btn-secondary">Cancel</a>
   </form>
 {% endblock %}

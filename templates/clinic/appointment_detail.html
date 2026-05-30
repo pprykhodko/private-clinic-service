@@ -3,11 +3,11 @@
 {% block content %}
   <h1>
     Appointment #{{ appointment.id }}
-    <a href="#" class="btn btn-danger link-to-page">
+    <a href="{% url "clinic:appointment-delete" pk=appointment.id %}" class="btn btn-danger">
       Delete
     </a>
 
-    <a href="{% url "clinic:appointment-update"  pk=appointment.id %}" class="btn btn-secondary link-to-page">
+    <a href="{% url "clinic:appointment-update"  pk=appointment.id %}" class="btn btn-secondary">
       Update
     </a>
   </h1>
