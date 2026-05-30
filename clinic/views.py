@@ -65,3 +65,9 @@ class AppointmentCreateView(LoginRequiredMixin, generic.CreateView):
 
 class AppointmentDetailView(LoginRequiredMixin, generic.DetailView):
     model = Appointment
+
+
+class AppointmentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Appointment
+    fields = ("appointment_date", "notes")
+    success_url = reverse_lazy("clinic:appointment-list")
