@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from clinic.forms import PatientForm, AppointmentForm
+from clinic.forms import PatientForm, AppointmentForm, CTScanForm
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
 
@@ -76,3 +76,16 @@ class AppointmentUpdateView(LoginRequiredMixin, generic.UpdateView):
 class AppointmentDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Appointment
     success_url = reverse_lazy("clinic:appointment-list")
+
+
+class CTScanListView(LoginRequiredMixin, generic.ListView):
+    model = CTScan
+    template_name = "clinic/ct_scan_list.html"
+    context_object_name = "ct_scan_list"
+
+
+class CTScanCreateView(LoginRequiredMixin, generic.CreateView):
+    model = CTScan
+    template_name = "clinic/ct_scan_form.html"
+    form_class = CTScanForm
+    success_url = reverse_lazy("clinic:ct-scan-list")

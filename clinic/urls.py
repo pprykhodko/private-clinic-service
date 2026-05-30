@@ -13,6 +13,7 @@ from clinic.views import (
     AppointmentDetailView,
     AppointmentUpdateView,
     AppointmentDeleteView,
+    CTScanListView, CTScanCreateView,
 )
 
 urlpatterns = [
@@ -63,6 +64,16 @@ urlpatterns = [
         "appointments/<int:pk>/delete/",
         AppointmentDeleteView.as_view(),
         name="appointment-delete"
+    ),
+    path(
+        "ct-scans/",
+        CTScanListView.as_view(),
+        name="ct-scan-list"
+    ),
+    path(
+        "ct-scans/create/",
+        CTScanCreateView.as_view(),
+        name="ct-scan-create"
     )
 ]
 

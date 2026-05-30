@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django import forms
 
-from clinic.models import Patient, Appointment
+from clinic.models import Patient, Appointment, CTScan
 
 
 class PatientForm(forms.ModelForm):
@@ -45,10 +45,25 @@ class AppointmentForm(forms.ModelForm):
             attrs={
                 "class": "form-control",
                 "type": "datetime-local",
-            },
+            }
         )
     )
 
     class Meta:
         model = Appointment
+        fields = "__all__"
+
+
+class CTScanForm(forms.ModelForm):
+    scan_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "form-control",
+                "type": "datetime-local",
+            }
+        )
+    )
+
+    class Meta:
+        model = CTScan
         fields = "__all__"
