@@ -12,6 +12,7 @@ from clinic.views import (
     AppointmentCreateView,
     AppointmentDetailView,
     AppointmentUpdateView,
+    AppointmentDeleteView,
 )
 
 urlpatterns = [
@@ -57,6 +58,11 @@ urlpatterns = [
         "appointments/<int:pk>/update/",
         AppointmentUpdateView.as_view(),
         name="appointment-update"
+    ),
+    path(
+        "appointments/<int:pk>/delete/",
+        AppointmentDeleteView.as_view(),
+        name="appointment-delete"
     )
 ]
 

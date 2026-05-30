@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Cancel this appointment?</h1>
+  <hr>
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Yes" class="btn btn-danger">
+    <a href="{% url "clinic:appointment-detail" pk=appointment.id %}" class="btn btn-secondary">No</a>
+  </form>
+{% endblock %}
