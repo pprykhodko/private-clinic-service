@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Private Clinic Service</h1>
   <p>Manage patients, appointments and CT Scans in one place</p>
-  <h2>Welcome back, {{ user.username }}</h2>
+  <h2>Welcome back, {{ user.first_name }} {{ user.last_name }}</h2>
   <ul>
     <li><strong>Doctors:</strong> {{ num_doctors }}</li>
     <li><strong>Patients:</strong> {{ num_patients }}</li>

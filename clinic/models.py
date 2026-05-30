@@ -38,7 +38,11 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=255, validators=[name_validator])
     last_name = models.CharField(max_length=255, validators=[name_validator])
     birth_date = models.DateField()
-    phone_number = models.CharField(max_length=20, unique=True, validators=[phone_validator])
+    phone_number = models.CharField(
+        max_length=20,
+        unique=True,
+        validators=[phone_validator]
+    )
     diagnosis = models.TextField(max_length=255, default="-")
 
     class Meta:
