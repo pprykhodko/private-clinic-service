@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="appointment",
             constraint=models.UniqueConstraint(
-                fields=("doctor", "appointment_date"), name="unique_appointment"
+                fields=("doctor", "appointment_date"),
+                name="unique_appointment"
             ),
         ),
     ]

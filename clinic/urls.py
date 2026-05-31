@@ -17,18 +17,26 @@ from clinic.views import (
     CTScanListView,
     CTScanCreateView,
     CTScanDetailView,
-    CTScanDeleteView
+    CTScanDeleteView,
 )
 
 urlpatterns = [
     path("", index, name="index"),
-    path("doctor/", DoctorListView.as_view(), name="doctor-list"),
+    path(
+        "doctor/",
+        DoctorListView.as_view(),
+        name="doctor-list"
+    ),
     path(
         "doctor/<int:pk>/",
         DoctorDetailView.as_view(),
         name="doctor-detail"
     ),
-    path("patient/", PatientListView.as_view(), name="patient-list"),
+    path(
+        "patient/",
+        PatientListView.as_view(),
+        name="patient-list"
+    ),
     path(
         "patient/create/",
         PatientCreateView.as_view(),
@@ -37,9 +45,9 @@ urlpatterns = [
     path(
         "patient/<int:pk>/",
         PatientDetailView.as_view(),
-        name="patient-detail"
-    ),
+        name="patient-detail"),
     path(
+
         "patient/<int:pk>/update/",
         PatientUpdateView.as_view(),
         name="patient-update"
@@ -57,22 +65,22 @@ urlpatterns = [
     path(
         "appointment/create/",
         AppointmentCreateView.as_view(),
-        name="appointment-create"
+        name="appointment-create",
     ),
     path(
         "appointment/<int:pk>/",
         AppointmentDetailView.as_view(),
-        name="appointment-detail"
+        name="appointment-detail",
     ),
     path(
         "appointment/<int:pk>/update/",
         AppointmentUpdateView.as_view(),
-        name="appointment-update"
+        name="appointment-update",
     ),
     path(
         "appointment/<int:pk>/delete/",
         AppointmentDeleteView.as_view(),
-        name="appointment-delete"
+        name="appointment-delete",
     ),
     path(
         "ct-scan/",
@@ -93,7 +101,7 @@ urlpatterns = [
         "ct-scan/<int:pk>/delete/",
         CTScanDeleteView.as_view(),
         name="ct-scan-delete"
-    )
+    ),
 ]
 
 app_name = "clinic"

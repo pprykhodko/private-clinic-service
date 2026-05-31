@@ -5,10 +5,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import mark_safe
 
-
 name_validator = RegexValidator(
     regex=r"^[A-Za-zА-Яа-яІіЇїЄє'-]+$",
-    message="Name can contain only letters, apostrophes and hyphens."
+    message="Name can contain only letters, apostrophes and hyphens.",
 )
 
 phone_validator = RegexValidator(
@@ -21,15 +20,18 @@ class Doctor(AbstractUser):
     specialization = models.CharField(max_length=255)
     hire_date = models.DateField()
     patients = models.ManyToManyField(
-        "Patient",
-        through="Appointment",
-        related_name="doctors"
+        "Patient", through="Appointment", related_name="doctors"
     )
 
     @property
     def years_of_experience(self):
         today = timezone.now().date()
-        return today.year - self.hire_date.year - ((today.month, today.day) < (self.hire_date.month, self.hire_date.day))
+        return (
+            today.year
+            - self.hire_date.year
+            - ((today.month, today.day)
+               < (self.hire_date.month, self.hire_date.day))
+        )
 
     class Meta:
         ordering = ["first_name", "last_name"]
@@ -43,9 +45,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=255, validators=[name_validator])
     birth_date = models.DateField()
     phone_number = models.CharField(
-        max_length=20,
-        unique=True,
-        validators=[phone_validator]
+        max_length=20, unique=True, validators=[phone_validator]
     )
     diagnosis = models.TextField(max_length=255, default="-")
 
@@ -61,14 +61,10 @@ class Patient(models.Model):
 
 class Appointment(models.Model):
     doctor = models.ForeignKey(
-        Doctor,
-        on_delete=models.CASCADE,
-        related_name="appointments"
+        Doctor, on_delete=models.CASCADE, related_name="appointments"
     )
     patient = models.ForeignKey(
-        Patient,
-        on_delete=models.CASCADE,
-        related_name="appointments"
+        Patient, on_delete=models.CASCADE, related_name="appointments"
     )
     appointment_date = models.DateTimeField()
     notes = models.TextField(max_length=255, blank=True, default="-")
@@ -88,13 +84,9 @@ class Appointment(models.Model):
 
 class CTScan(models.Model):
     patient = models.ForeignKey(
-        Patient,
-        on_delete=models.CASCADE,
-        related_name="ct_scans"
+        Patient, on_delete=models.CASCADE, related_name="ct_scans"
     )
-    image = models.ImageField(
-        upload_to="ct_scan/"
-    )
+    image = models.ImageField(upload_to="ct_scan/")
     scan_date = models.DateTimeField()
     description = models.TextField(max_length=255, blank=True, default="-")
 
@@ -113,10 +105,10 @@ class CTScan(models.Model):
 
     def list_image_preview(self):
         return mark_safe(
-            f"<img src='{self.image.url}' "
-            f"alt='' "
-            f"width='195' "
-            f"height='160' "
+            f"<img src='{self.image.url}'"
+            f"alt=''"
+            f"width='195'"
+            f"height='160'"
         )
 
     def __str__(self):

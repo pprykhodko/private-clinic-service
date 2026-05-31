@@ -14,7 +14,7 @@ from clinic.forms import (
     AppointmentUpdateForm,
     AppointmentSearchForm,
     CTScanForm,
-    CTScanSearchForm
+    CTScanSearchForm,
 )
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
@@ -58,7 +58,7 @@ class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(DoctorDetailView, self).get_context_data(**kwargs)
-        context["patient_list"] = self.object.patients.all()
+        context["patient_list"] = self.object.patients.all().distinct()
         return context
 
 
@@ -77,7 +77,9 @@ class PatientListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         last_name = self.request.GET.get("last_name")
         if last_name:
-            return Patient.objects.filter(last_name__iregex=last_name.capitalize())
+            return Patient.objects.filter(
+                last_name__iregex=last_name.capitalize()
+            )
         return Patient.objects.all()
 
 
@@ -110,7 +112,9 @@ class AppointmentListView(LoginRequiredMixin, generic.ListView):
         context = super(AppointmentListView, self).get_context_data(**kwargs)
         patient = self.request.GET.get("patient", "")
         context["search_form"] = AppointmentSearchForm(
-            initial={"patient": patient}
+            initial={
+                "patient": patient
+            }
         )
         return context
 
@@ -118,8 +122,8 @@ class AppointmentListView(LoginRequiredMixin, generic.ListView):
         patient = self.request.GET.get("patient")
         if patient:
             return Appointment.objects.filter(
-                Q(patient__first_name__iregex=patient.capitalize()) |
-                Q(patient__last_name__iregex=patient.capitalize())
+                Q(patient__first_name__iregex=patient.capitalize())
+                | Q(patient__last_name__iregex=patient.capitalize())
             )
         return Appointment.objects.all()
 
@@ -154,17 +158,15 @@ class CTScanListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(CTScanListView, self).get_context_data(**kwargs)
         patient = self.request.GET.get("patient", "")
-        context["search_form"] = CTScanSearchForm(
-            initial={"patient": patient}
-        )
+        context["search_form"] = CTScanSearchForm(initial={"patient": patient})
         return context
 
     def get_queryset(self):
         patient = self.request.GET.get("patient")
         if patient:
             return CTScan.objects.filter(
-                Q(patient__first_name__iregex=patient.capitalize()) |
-                Q(patient__last_name__iregex=patient.capitalize())
+                Q(patient__first_name__iregex=patient.capitalize())
+                | Q(patient__last_name__iregex=patient.capitalize())
             )
         return CTScan.objects.all()
 

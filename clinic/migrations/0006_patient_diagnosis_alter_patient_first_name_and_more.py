@@ -23,7 +23,8 @@ class Migration(migrations.Migration):
                 max_length=255,
                 validators=[
                     django.core.validators.RegexValidator(
-                        message="Name can contain only letters, apostrophes and hyphens.",
+                        message="Name can contain only letters, "
+                        "apostrophes and hyphens.",
                         regex="^[A-Za-zА-Яа-яІіЇїЄє'-]+$",
                     )
                 ],
@@ -36,7 +37,8 @@ class Migration(migrations.Migration):
                 max_length=255,
                 validators=[
                     django.core.validators.RegexValidator(
-                        message="Name can contain only letters, apostrophes and hyphens.",
+                        message="Name can contain only letters, "
+                        "apostrophes and hyphens.",
                         regex="^[A-Za-zА-Яа-яІіЇїЄє'-]+$",
                     )
                 ],

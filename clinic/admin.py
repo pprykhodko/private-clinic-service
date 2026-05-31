@@ -6,38 +6,44 @@ from clinic.models import Doctor, Patient, Appointment, CTScan
 
 @admin.register(Doctor)
 class DoctorAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ("specialization", )
+    list_display = UserAdmin.list_display + ("specialization",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info",
-          {
-              "fields":
-                  (
-                      "specialization",
-                      "hire_date",
-                  )
-          }
-          ),
-         )
+        (
+            (
+                "Additional info",
+                {
+                    "fields": (
+                        "specialization",
+                        "hire_date",
+                    )
+                },
+            ),
+        )
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (("Additional info",
-          {
-              "fields":
-                  (
-                      "first_name",
-                      "last_name",
-                      "specialization",
-                      "years_of_experience",
-                  )
-          }
-          ),
-         )
+        (
+            (
+                "Additional info",
+                {
+                    "fields": (
+                        "first_name",
+                        "last_name",
+                        "specialization",
+                        "years_of_experience",
+                    )
+                },
+            ),
+        )
     )
 
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "birth_date", "phone_number", )
+    list_display = (
+        "__str__",
+        "birth_date",
+        "phone_number",
+    )
     search_fields = ("first_name", "last_name")
 
 

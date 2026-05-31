@@ -6,7 +6,10 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("clinic", "0002_remove_doctor_license_number_remove_patient_doctors_and_more"),
+        (
+            "clinic",
+            "0002_remove_doctor_license_number_remove_patient_doctors_and_more"
+        ),
     ]
 
     operations = [
@@ -17,7 +20,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="ctscan",
             name="image",
-            field=models.ImageField(default="default.jpg", upload_to="ct_scan/"),
+            field=models.ImageField(
+                default="default.jpg",
+                upload_to="ct_scan/"
+            ),
             preserve_default=False,
         ),
     ]
