@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
@@ -18,12 +19,17 @@ phone_validator = RegexValidator(
 
 class Doctor(AbstractUser):
     specialization = models.CharField(max_length=255)
-    years_of_experience = models.PositiveIntegerField(default=0)
+    hire_date = models.DateField()
     patients = models.ManyToManyField(
         "Patient",
         through="Appointment",
         related_name="doctors"
     )
+
+    @property
+    def years_of_experience(self):
+        today = timezone.now().date()
+        return today.year - self.hire_date.year - ((today.month, today.day) < (self.hire_date.month, self.hire_date.day))
 
     class Meta:
         ordering = ["first_name", "last_name"]

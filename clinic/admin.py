@@ -13,7 +13,7 @@ class DoctorAdmin(UserAdmin):
               "fields":
                   (
                       "specialization",
-                      "years_of_experience",
+                      "hire_date",
                   )
           }
           ),
