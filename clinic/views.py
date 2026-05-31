@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from clinic.forms import PatientForm, AppointmentForm, CTScanForm
+from clinic.forms import PatientForm, AppointmentForm, AppointmentUpdateForm, CTScanForm
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
 
@@ -69,7 +69,7 @@ class AppointmentDetailView(LoginRequiredMixin, generic.DetailView):
 
 class AppointmentUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Appointment
-    fields = ("appointment_date", "notes")
+    form_class = AppointmentUpdateForm
     success_url = reverse_lazy("clinic:appointment-list")
 
 

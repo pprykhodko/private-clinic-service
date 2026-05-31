@@ -1,8 +1,29 @@
+from datetime import timedelta
+
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django import forms
 
 from clinic.models import Patient, Appointment, CTScan
+
+
+def validate_appointment(doctor, appointment_date, instance_pk=None):
+    if doctor and appointment_date:
+        time_conflict = Appointment.objects.filter(
+            doctor=doctor,
+            appointment_date__gt=appointment_date - timedelta(minutes=10),
+            appointment_date__lt=appointment_date + timedelta(minutes=10)
+        ).exclude(pk=instance_pk)
+
+        if time_conflict.exists():
+            raise ValidationError(
+                "This doctor already has an appointment within 10 minutes"
+            )
+
+    if appointment_date < timezone.now():
+        raise ValidationError(
+            "Appointment date cannot be in the past."
+        )
 
 
 class PatientForm(forms.ModelForm):
@@ -53,6 +74,38 @@ class AppointmentForm(forms.ModelForm):
         model = Appointment
         fields = "__all__"
 
+    def clean(self):
+        cleaned_data = super().clean()
+        validate_appointment(
+            cleaned_data.get("doctor"),
+            cleaned_data.get("appointment_date"),
+            self.instance.pk
+        )
+        return cleaned_data
+
+
+class AppointmentUpdateForm(forms.ModelForm):
+    appointment_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={
+                "class": "form-control",
+                "type": "datetime-local",
+            }
+        )
+    )
+
+    class Meta:
+        model = Appointment
+        fields = ("appointment_date", "notes")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        validate_appointment(
+            self.instance.doctor,
+            cleaned_data.get("appointment_date"),
+            self.instance.pk
+        )
+        return cleaned_data
 
 class CTScanForm(forms.ModelForm):
     scan_date = forms.DateTimeField(
