@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -11,7 +12,9 @@ from clinic.forms import (
     PatientSearchForm,
     AppointmentForm,
     AppointmentUpdateForm,
-    CTScanForm
+    AppointmentSearchForm,
+    CTScanForm,
+    CTScanSearchForm
 )
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
@@ -103,6 +106,23 @@ class AppointmentListView(LoginRequiredMixin, generic.ListView):
     model = Appointment
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(AppointmentListView, self).get_context_data(**kwargs)
+        patient = self.request.GET.get("patient", "")
+        context["search_form"] = AppointmentSearchForm(
+            initial={"patient": patient}
+        )
+        return context
+
+    def get_queryset(self):
+        patient = self.request.GET.get("patient")
+        if patient:
+            return Appointment.objects.filter(
+                Q(patient__first_name__iregex=patient.capitalize()) |
+                Q(patient__last_name__iregex=patient.capitalize())
+            )
+        return Appointment.objects.all()
+
 
 class AppointmentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Appointment
@@ -130,6 +150,23 @@ class CTScanListView(LoginRequiredMixin, generic.ListView):
     template_name = "clinic/ct_scan_list.html"
     context_object_name = "ct_scan_list"
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(CTScanListView, self).get_context_data(**kwargs)
+        patient = self.request.GET.get("patient", "")
+        context["search_form"] = CTScanSearchForm(
+            initial={"patient": patient}
+        )
+        return context
+
+    def get_queryset(self):
+        patient = self.request.GET.get("patient")
+        if patient:
+            return CTScan.objects.filter(
+                Q(patient__first_name__iregex=patient.capitalize()) |
+                Q(patient__last_name__iregex=patient.capitalize())
+            )
+        return CTScan.objects.all()
 
 
 class CTScanCreateView(LoginRequiredMixin, generic.CreateView):

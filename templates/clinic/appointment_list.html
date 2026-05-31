@@ -1,8 +1,13 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="m-0">Appointments</h1>
+    <form method="get" action="" class="form-inline">
+      {{ search_form|crispy }}
+      <input type="submit" value="Search" class="btn btn-secondary">
+    </form>
 
     <a href="{% url "clinic:appointment-create" %}" class="btn btn-primary">
       Create

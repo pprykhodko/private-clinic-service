@@ -134,6 +134,19 @@ class AppointmentUpdateForm(forms.ModelForm):
         return cleaned_data
 
 
+class AppointmentSearchForm(forms.Form):
+    patient = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by first or last name",
+            }
+        )
+    )
+
+
 class CTScanForm(forms.ModelForm):
     scan_date = forms.DateTimeField(
         widget=forms.DateTimeInput(
@@ -175,3 +188,16 @@ class CTScanForm(forms.ModelForm):
                 "This scan already exists."
             )
         return cleaned_data
+
+
+class CTScanSearchForm(forms.Form):
+    patient = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by first or last name",
+            }
+        )
+    )
