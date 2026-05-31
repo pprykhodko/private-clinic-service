@@ -26,6 +26,19 @@ def validate_appointment(doctor, appointment_date, instance_pk=None):
         )
 
 
+class DoctorSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by username",
+            }
+        )
+    )
+
+
 class PatientForm(forms.ModelForm):
     birth_date = forms.DateField(
         widget=forms.DateInput(
@@ -58,6 +71,19 @@ class PatientForm(forms.ModelForm):
                 "Patient age seems unrealistic."
             )
         return birth_date
+
+
+class PatientSearchForm(forms.Form):
+    last_name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Search by last name",
+            }
+        )
+    )
 
 
 class AppointmentForm(forms.ModelForm):

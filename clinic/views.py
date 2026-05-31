@@ -6,7 +6,9 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from clinic.forms import (
+    DoctorSearchForm,
     PatientForm,
+    PatientSearchForm,
     AppointmentForm,
     AppointmentUpdateForm,
     CTScanForm
@@ -33,12 +35,26 @@ class DoctorListView(LoginRequiredMixin, generic.ListView):
     model = Doctor
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super(DoctorListView, self).get_context_data(**kwargs)
+        username = self.request.GET.get("username", "")
+        context["search_form"] = DoctorSearchForm(
+            initial={"username": username}
+        )
+        return context
+
+    def get_queryset(self):
+        username = self.request.GET.get("username")
+        if username:
+            return Doctor.objects.filter(username__icontains=username)
+        return Doctor.objects.all()
+
 
 class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
     model = Doctor
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(DoctorDetailView, self).get_context_data(**kwargs)
         context["patient_list"] = self.object.patients.all()
         return context
 
@@ -46,6 +62,20 @@ class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
 class PatientListView(LoginRequiredMixin, generic.ListView):
     model = Patient
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientListView, self).get_context_data(**kwargs)
+        last_name = self.request.GET.get("last_name", "")
+        context["search_form"] = PatientSearchForm(
+            initial={"last_name": last_name}
+        )
+        return context
+
+    def get_queryset(self):
+        last_name = self.request.GET.get("last_name")
+        if last_name:
+            return Patient.objects.filter(last_name__iregex=last_name.capitalize())
+        return Patient.objects.all()
 
 
 class PatientCreateView(LoginRequiredMixin, generic.CreateView):
