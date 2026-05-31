@@ -3,6 +3,7 @@ from django.urls import path
 from clinic.views import (
     index,
     DoctorListView,
+    DoctorDetailView,
     PatientListView,
     PatientCreateView,
     PatientDetailView,
@@ -16,55 +17,60 @@ from clinic.views import (
     CTScanListView,
     CTScanCreateView,
     CTScanDetailView,
-    CTScanDeleteView,
+    CTScanDeleteView
 )
 
 urlpatterns = [
     path("", index, name="index"),
-    path("doctors/", DoctorListView.as_view(), name="doctor-list"),
-    path("patients/", PatientListView.as_view(), name="patient-list"),
+    path("doctor/", DoctorListView.as_view(), name="doctor-list"),
     path(
-        "patients/create/",
+        "doctor/<int:pk>/",
+        DoctorDetailView.as_view(),
+        name="doctor-detail"
+    ),
+    path("patient/", PatientListView.as_view(), name="patient-list"),
+    path(
+        "patient/create/",
         PatientCreateView.as_view(),
         name="patient-create"
     ),
     path(
-        "patients/<int:pk>/",
+        "patient/<int:pk>/",
         PatientDetailView.as_view(),
         name="patient-detail"
     ),
     path(
-        "patients/<int:pk>/update/",
+        "patient/<int:pk>/update/",
         PatientUpdateView.as_view(),
         name="patient-update"
     ),
     path(
-        "patients/<int:pk>/delete/",
+        "patient/<int:pk>/delete/",
         PatientDeleteView.as_view(),
         name="patient-delete"
     ),
     path(
-        "appointments/",
+        "appointment/",
         AppointmentListView.as_view(),
         name="appointment-list"
     ),
     path(
-        "appointments/create/",
+        "appointment/create/",
         AppointmentCreateView.as_view(),
         name="appointment-create"
     ),
     path(
-        "appointments/<int:pk>/",
+        "appointment/<int:pk>/",
         AppointmentDetailView.as_view(),
         name="appointment-detail"
     ),
     path(
-        "appointments/<int:pk>/update/",
+        "appointment/<int:pk>/update/",
         AppointmentUpdateView.as_view(),
         name="appointment-update"
     ),
     path(
-        "appointments/<int:pk>/delete/",
+        "appointment/<int:pk>/delete/",
         AppointmentDeleteView.as_view(),
         name="appointment-delete"
     ),

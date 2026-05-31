@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ doctor.first_name }} {{ doctor.last_name }}
+  </h1>
+
+  <hr>
+  <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+  <p><strong>Hire date:</strong> {{ doctor.hire_date|date:"Y.m.d" }}</p>
+
+  <h4><strong>Patients:</strong></h4>
+  <hr>
+  {% for patient in patient_list %}
+    <p>{{ patient.first_name }} {{ patient.last_name }}</p>
+  {% endfor %}
+{% endblock %}

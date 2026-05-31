@@ -14,7 +14,7 @@
       </tr>
       {% for doctor in doctor_list %}
         <tr>
-          <td>{{ doctor.id }}</td>
+          <td><a href="{% url 'clinic:doctor-detail' pk=doctor.id %}">{{ doctor.id }}</a></td>
           <td>{{ doctor.first_name }} {{ doctor.last_name }}
             {% if user == doctor %}
               (Me)

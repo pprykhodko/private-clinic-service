@@ -5,7 +5,12 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from clinic.forms import PatientForm, AppointmentForm, AppointmentUpdateForm, CTScanForm
+from clinic.forms import (
+    PatientForm,
+    AppointmentForm,
+    AppointmentUpdateForm,
+    CTScanForm
+)
 from clinic.models import Doctor, Patient, Appointment, CTScan
 
 
@@ -28,6 +33,15 @@ class DoctorListView(LoginRequiredMixin, generic.ListView):
     model = Doctor
 
 
+class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Doctor
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["patient_list"] = self.object.patients.all()
+        return context
+
+
 class PatientListView(LoginRequiredMixin, generic.ListView):
     model = Patient
 
@@ -44,7 +58,7 @@ class PatientDetailView(LoginRequiredMixin, generic.DetailView):
 
 class PatientUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Patient
-    fields = "__all__"
+    form_class = PatientForm
     success_url = reverse_lazy("clinic:patient-list")
 
 
