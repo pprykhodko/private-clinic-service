@@ -38,7 +38,7 @@ class PatientForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        fields ="__all__"
+        fields = "__all__"
 
     def clean_birth_date(self):
         birth_date = self.cleaned_data["birth_date"]
@@ -106,6 +106,7 @@ class AppointmentUpdateForm(forms.ModelForm):
             self.instance.pk
         )
         return cleaned_data
+
 
 class CTScanForm(forms.ModelForm):
     scan_date = forms.DateTimeField(
