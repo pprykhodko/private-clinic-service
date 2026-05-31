@@ -67,3 +67,31 @@ class CTScanForm(forms.ModelForm):
     class Meta:
         model = CTScan
         fields = "__all__"
+
+    def clean_scan_date(self):
+        scan_date = self.cleaned_data["scan_date"]
+
+        if scan_date > timezone.now():
+            raise ValidationError(
+                "Scan date cannot be in the future."
+            )
+        return scan_date
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        patient = cleaned_data.get("patient")
+        scan_date = cleaned_data.get("scan_date")
+
+        if patient and scan_date and scan_date.date() < patient.birth_date:
+            raise ValidationError(
+                "Scan date cannot be earlier than patient's birth date."
+            )
+
+        if CTScan.objects.filter(
+            patient=patient, scan_date=scan_date
+        ).exists():
+            raise ValidationError(
+                "This scan already exists."
+            )
+        return cleaned_data
