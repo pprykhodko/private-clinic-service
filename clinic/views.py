@@ -89,3 +89,14 @@ class CTScanCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = "clinic/ct_scan_form.html"
     form_class = CTScanForm
     success_url = reverse_lazy("clinic:ct-scan-list")
+
+
+class CTScanDetailView(LoginRequiredMixin, generic.DetailView):
+    model = CTScan
+    template_name = "clinic/ct_scan_detail.html"
+
+
+class CTScanDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = CTScan
+    template_name = "clinic/ct_scan_confirm_delete.html"
+    success_url = reverse_lazy("clinic:ct-scan-list")
