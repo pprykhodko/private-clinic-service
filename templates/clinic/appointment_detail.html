@@ -25,6 +25,6 @@
 
   <hr>
   <h2>Details:</h2>
-  <p>Scheduled Time: {{ appointment.appointment_date }}</p>
+  <p>Scheduled Time: {{ appointment.appointment_date|date:"d.m.Y H:i" }}</p>
   <p>Notes: {{ appointment.notes }}</p>
 {% endblock %}
