@@ -31,6 +31,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class DoctorListView(LoginRequiredMixin, generic.ListView):
     model = Doctor
+    paginate_by = 10
 
 
 class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
@@ -44,6 +45,7 @@ class DoctorDetailView(LoginRequiredMixin, generic.DetailView):
 
 class PatientListView(LoginRequiredMixin, generic.ListView):
     model = Patient
+    paginate_by = 10
 
 
 class PatientCreateView(LoginRequiredMixin, generic.CreateView):
@@ -69,6 +71,7 @@ class PatientDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class AppointmentListView(LoginRequiredMixin, generic.ListView):
     model = Appointment
+    paginate_by = 10
 
 
 class AppointmentCreateView(LoginRequiredMixin, generic.CreateView):
@@ -96,6 +99,7 @@ class CTScanListView(LoginRequiredMixin, generic.ListView):
     model = CTScan
     template_name = "clinic/ct_scan_list.html"
     context_object_name = "ct_scan_list"
+    paginate_by = 10
 
 
 class CTScanCreateView(LoginRequiredMixin, generic.CreateView):
