@@ -1,40 +1,94 @@
-{% extends "base.html" %}
-{% load crispy_forms_filters %}
+{#{% extends "base.html" %}#}
+{#{% load crispy_forms_filters %}#}
+{##}
+{#{% block content %}#}
+{#  <h1>Doctor List</h1>#}
+{#  <form method="get" action="" class="form-inline">#}
+{#    {{ search_form|crispy }}#}
+{#    <input type="submit" value="Search" class="btn btn-secondary">#}
+{#  </form>#}
+{##}
+{#  <hr>#}
+{#  {% if doctor_list %}#}
+{#    <table class="table">#}
+{#      <tr>#}
+{#        <th>ID</th>#}
+{#        <th>Full name</th>#}
+{#        <th>Username</th>#}
+{#        <th>Specialization</th>#}
+{#        <th>Years of experience</th>#}
+{#      </tr>#}
+{#      {% for doctor in doctor_list %}#}
+{#        <tr>#}
+{#          <td><a href="{% url 'clinic:doctor-detail' pk=doctor.id %}">{{ doctor.id }}</a></td>#}
+{#          <td>{{ doctor.first_name }} {{ doctor.last_name }}#}
+{#            {% if user == doctor %}#}
+{#              (Me)#}
+{#            {% endif %}#}
+{#          </td>#}
+{#          <td>{{ doctor.username }}</td>#}
+{#          <td>{{ doctor.specialization }}</td>#}
+{#          <td>{{ doctor.years_of_experience }}</td>#}
+{#          <td>#}
+{#          </td>#}
+{#        </tr>#}
+{#      {% endfor %}#}
+{#    </table>#}
+{#  {% else %}#}
+{#    <p>There are no doctors in the service.</p>#}
+{#  {% endif %}#}
+{#{% endblock %}#}
+
+{% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>Doctor List</h1>
-  <form method="get" action="" class="form-inline">
-    {{ search_form|crispy }}
-    <input type="submit" value="Search" class="btn btn-secondary">
-  </form>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">Doctors</h1>
+      <p class="text-muted mb-0">Clinic medical staff</p>
+    </div>
+  </div>
 
-  <hr>
   {% if doctor_list %}
-    <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Full name</th>
-        <th>Username</th>
-        <th>Specialization</th>
-        <th>Years of experience</th>
-      </tr>
-      {% for doctor in doctor_list %}
-        <tr>
-          <td><a href="{% url 'clinic:doctor-detail' pk=doctor.id %}">{{ doctor.id }}</a></td>
-          <td>{{ doctor.first_name }} {{ doctor.last_name }}
-            {% if user == doctor %}
-              (Me)
-            {% endif %}
-          </td>
-          <td>{{ doctor.username }}</td>
-          <td>{{ doctor.specialization }}</td>
-          <td>{{ doctor.years_of_experience }}</td>
-          <td>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th class="text-center">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for doctor in doctor_list %}
+            <tr>
+              <td><strong>#{{ doctor.id }}</strong></td>
+              <td>
+                <strong>
+                  {{ doctor.first_name }} {{ doctor.last_name }}
+                </strong>
+              </td>
+              <td>{{ doctor.specialization }}</td>
+              <td>
+                {{ doctor.years_of_experience }} years
+              </td>
+              <td class="text-center">
+                <a href="{% url 'clinic:doctor-detail' pk=doctor.pk %}" class="btn btn-sm btn-outline-primary">
+                  Detail
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   {% else %}
-    <p>There are no doctors in the service.</p>
+    <div class="alert alert-info">
+      There are no doctors yet.
+    </div>
   {% endif %}
 {% endblock %}

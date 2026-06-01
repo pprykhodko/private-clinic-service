@@ -1,24 +1,79 @@
-{% extends "base.html" %}
-{% load crispy_forms_filters %}
+{#{% extends "base.html" %}#}
+{#{% load crispy_forms_filters %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="d-flex justify-content-between align-items-center mb-4">#}
+{#    <div>#}
+{#      <h1 class="m-0">CT Scans</h1>#}
+{#      <p class="text-muted mb-0">Uploaded tomography scans</p>#}
+{#    </div>#}
+{##}
+{#    <form method="get" action="" class="form-inline">#}
+{#      {{ search_form|crispy }}#}
+{#      <input type="submit" value="Search" class="btn btn-secondary">#}
+{#    </form>#}
+{#    <a href="{% url 'clinic:ct-scan-create' %}" class="btn btn-primary">#}
+{#      + Add scan#}
+{#    </a>#}
+{#  </div>#}
+{##}
+{#  {% if ct_scan_list %}#}
+{#    <div class="card shadow-sm">#}
+{#      <div class="card-body p-0">#}
+{#        <table class="table table-hover align-middle mb-0">#}
+{#          <thead class="table-light">#}
+{#          <tr>#}
+{#            <th>ID</th>#}
+{#            <th>Preview</th>#}
+{#            <th>Patient</th>#}
+{#            <th>Scan Date</th>#}
+{#            <th class="text-center">Actions</th>#}
+{#          </tr>#}
+{#          </thead>#}
+{#          <tbody>#}
+{#          {% for ct_scan in ct_scan_list %}#}
+{#            <tr>#}
+{#              <td><strong>#{{ ct_scan.id }}</strong></td>#}
+{#              <td><a href="{{ ct_scan.image.url }}" target="_blank">#}
+{#                <img src="{{ ct_scan.image.url }}" alt="CT Scan" width="120" class="img-thumbnail">#}
+{#              </a></td>#}
+{#              <td><strong>{{ ct_scan.patient }}</strong></td>#}
+{#              <td>{{ ct_scan.scan_date|date:"d.m.Y H:i" }}</td>#}
+{#              <td class="text-center">#}
+{#                <a href="{% url 'clinic:ct-scan-detail' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-primary">#}
+{#                  Detail#}
+{#                </a>#}
+{#              </td>#}
+{#            </tr>#}
+{#          {% endfor %}#}
+{#          </tbody>#}
+{#        </table>#}
+{#      </div>#}
+{#    </div>#}
+{#  {% else %}#}
+{#    <div class="alert alert-info">#}
+{#      There are no scans yet.#}
+{#    </div>#}
+{#  {% endif %}#}
+{#{% endblock %}#}
+
+{% extends "layouts/base.html" %}
 
 {% block content %}
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <h1 class="m-0">CT Scans</h1>
-      <p class="text-muted mb-0">Uploaded tomography scans</p>
+      <h1 class="h3 mb-0">CT Scans</h1>
+      <p class="text-muted mb-0">
+        Patient tomography scans
+      </p>
     </div>
-
-    <form method="get" action="" class="form-inline">
-      {{ search_form|crispy }}
-      <input type="submit" value="Search" class="btn btn-secondary">
-    </form>
     <a href="{% url 'clinic:ct-scan-create' %}" class="btn btn-primary">
       + Add scan
     </a>
   </div>
 
   {% if ct_scan_list %}
-    <div class="card shadow-sm">
+    <div class="card border-0 shadow-sm">
       <div class="card-body p-0">
         <table class="table table-hover align-middle mb-0">
           <thead class="table-light">
@@ -33,15 +88,26 @@
           <tbody>
           {% for ct_scan in ct_scan_list %}
             <tr>
-              <td><strong>#{{ ct_scan.id }}</strong></td>
-              <td><a href="{{ ct_scan.image.url }}" target="_blank">
-                <img src="{{ ct_scan.image.url }}" alt="CT Scan" width="120" class="img-thumbnail">
-              </a></td>
-              <td><strong>{{ ct_scan.patient }}</strong></td>
-              <td>{{ ct_scan.scan_date|date:"d.m.Y H:i" }}</td>
+              <td>
+                <strong>#{{ ct_scan.id }}</strong>
+              </td>
+              <td>
+                <a href="{{ ct_scan.image.url }}" target="_blank">
+                  <img src="{{ ct_scan.image.url }}" alt="CT Scan" width="100" class="img-thumbnail">
+                </a>
+              </td>
+              <td>
+                <strong>{{ ct_scan.patient }}</strong>
+              </td>
+              <td>
+                {{ ct_scan.scan_date|date:"d.m.Y H:i" }}
+              </td>
               <td class="text-center">
                 <a href="{% url 'clinic:ct-scan-detail' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-primary">
                   Detail
+                </a>
+                <a href="{% url 'clinic:ct-scan-delete' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-danger">
+                  Delete
                 </a>
               </td>
             </tr>
@@ -51,8 +117,6 @@
       </div>
     </div>
   {% else %}
-    <div class="alert alert-info">
-      There are no scans yet.
-    </div>
+    <div class="alert alert-info">There are no CT scans yet.</div>
   {% endif %}
 {% endblock %}
