@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from clinic.models import Doctor, Patient, Appointment, CTScan
+from clinic.forms import CTScanForm
 
 
 @admin.register(Doctor)
@@ -29,7 +30,7 @@ class DoctorAdmin(UserAdmin):
                         "first_name",
                         "last_name",
                         "specialization",
-                        "years_of_experience",
+                        "hire_date",
                     )
                 },
             ),
@@ -54,5 +55,6 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 @admin.register(CTScan)
 class CTScanAdmin(admin.ModelAdmin):
+    form = CTScanForm
     readonly_fields = ("detail_image_preview",)
     list_display = ("__str__", "scan_date", "list_image_preview")
