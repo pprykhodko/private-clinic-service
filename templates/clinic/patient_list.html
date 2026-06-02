@@ -51,12 +51,7 @@
               <td>{{ patient.birth_date|date:"d.m.Y" }}</td>
               <td>{{ patient.phone_number }}</td>
               <td class="text-center">
-                <a href="{% url 'clinic:patient-detail' pk=patient.pk %}" class="btn btn-sm btn-outline-primary">
-                  Detail
-                </a>
-                <a href="{% url 'clinic:patient-update' pk=patient.pk %}" class="btn btn-sm btn-outline-secondary">
-                  Update
-                </a>
+                <a href="{% url 'clinic:patient-detail' pk=patient.pk %}" class="btn btn-sm btn-outline-primary">Detail</a>
               </td>
             </tr>
           {% endfor %}

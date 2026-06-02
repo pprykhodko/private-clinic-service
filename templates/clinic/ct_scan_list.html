@@ -5,13 +5,10 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h1 class="h3 mb-0">CT Scans</h1>
-      <p class="text-muted mb-0">
-        Patient tomography scans
-      </p>
+      <p class="text-muted mb-0">Patient tomography scans</p>
     </div>
-    <a href="{% url 'clinic:ct-scan-create' %}" class="btn btn-primary">
-      + Add scan
-    </a>
+
+    <a href="{% url 'clinic:ct-scan-create' %}" class="btn btn-primary">+ Add scan</a>
   </div>
 
   <form method="get" action="" class="mb-4">
@@ -21,12 +18,9 @@
           <div class="flex-grow-1">
             {{ search_form|crispy }}
           </div>
-          <button type="submit" class="btn btn-primary">
-            Search
-          </button>
-          <a href="{{ request.path }}" class="btn btn-outline-secondary">
-            Clear
-          </a>
+
+          <button type="submit" class="btn btn-primary">Search</button>
+          <a href="{{ request.path }}" class="btn btn-outline-secondary">Clear</a>
         </div>
       </div>
     </div>
@@ -45,6 +39,7 @@
             <th class="text-center">Actions</th>
           </tr>
           </thead>
+
           <tbody>
           {% for ct_scan in ct_scan_list %}
             <tr>
@@ -57,12 +52,7 @@
               <td><strong>{{ ct_scan.patient }}</strong></td>
               <td>{{ ct_scan.scan_date|date:"d.m.Y H:i" }}</td>
               <td class="text-center">
-                <a href="{% url 'clinic:ct-scan-detail' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-primary">
-                  Detail
-                </a>
-                <a href="{% url 'clinic:ct-scan-delete' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-danger">
-                  Delete
-                </a>
+                <a href="{% url 'clinic:ct-scan-detail' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-primary">Detail</a>
               </td>
             </tr>
           {% endfor %}
@@ -70,7 +60,7 @@
         </table>
       </div>
     </div>
-    
+
     <div class="mt-4">
       {% include "includes/pagination.html" %}
     </div>

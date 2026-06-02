@@ -54,12 +54,6 @@
                 <a href="{% url 'clinic:appointment-detail' pk=appointment.pk %}" class="btn btn-sm btn-outline-primary">
                   Detail
                 </a>
-                <a href="{% url 'clinic:appointment-update' pk=appointment.pk %}" class="btn btn-sm btn-outline-secondary">
-                  Update
-                </a>
-                <a href="{% url 'clinic:appointment-delete' pk=appointment.pk %}" class="btn btn-sm btn-outline-danger">
-                  Delete
-                </a>
               </td>
             </tr>
           {% endfor %}
