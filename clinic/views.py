@@ -40,9 +40,9 @@ class DoctorListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DoctorListView, self).get_context_data(**kwargs)
-        username = self.request.GET.get("username", "")
+        doctor = self.request.GET.get("doctor", "")
         context["search_form"] = DoctorSearchForm(
-            initial={"username": username}
+            initial={"doctor": doctor}
         )
         return context
 
@@ -71,9 +71,9 @@ class PatientListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PatientListView, self).get_context_data(**kwargs)
-        last_name = self.request.GET.get("last_name", "")
+        patient = self.request.GET.get("patient", "")
         context["search_form"] = PatientSearchForm(
-            initial={"last_name": last_name}
+            initial={"patient": patient}
         )
         return context
 
