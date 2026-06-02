@@ -1,30 +1,43 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>
-    Appointment #{{ appointment.id }}
-    <a href="{% url "clinic:appointment-delete" pk=appointment.id %}" class="btn btn-danger">
-      Delete
-    </a>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">Appointment #{{ appointment.id }}</h1>
+    </div>
 
-    <a href="{% url "clinic:appointment-update"  pk=appointment.id %}" class="btn btn-secondary">
-      Update
-    </a>
-  </h1>
+    <div>
+      <a href="{% url 'clinic:appointment-update' pk=appointment.pk %}" class="btn btn-outline-secondary">Update</a>
+      <a href="{% url 'clinic:appointment-delete' pk=appointment.pk %}" class="btn btn-outline-danger">Delete</a>
+      <a href="{% url 'clinic:appointment-list' %}" class="btn btn-outline-primary">Back</a>
+    </div>
+  </div>
 
-  <hr>
-  <h2>Patient:</h2>
-  <p>First name: {{ appointment.patient.first_name }}</p>
-  <p>Last name: {{ appointment.patient.last_name }}</p>
-  <p>Phone Number: {{ appointment.patient.phone_number }}</p>
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header">Patient Information</div>
 
-  <hr>
-  <h2>Doctor:</h2>
-  <p>First name: {{ appointment.doctor.first_name }}</p>
-  <p>Last name: {{ appointment.doctor.last_name }}</p>
+    <div class="card-body">
+      <p><strong>First name: </strong>{{ appointment.patient.first_name }}</p>
+      <p><strong>Last name: </strong>{{ appointment.patient.last_name }}</p>
+      <p class="mb-0"><strong>Phone Number: </strong>{{ appointment.patient.phone_number }}</p>
+    </div>
+  </div>
 
-  <hr>
-  <h2>Details:</h2>
-  <p>Scheduled Time: {{ appointment.appointment_date|date:"d.m.Y H:i" }}</p>
-  <p>Notes: {{ appointment.notes }}</p>
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header">Doctor Information</div>
+
+    <div class="card-body">
+      <p><strong>First name: </strong>{{ appointment.doctor.first_name }}</p>
+      <p class="mb-0"><strong>Last name: </strong>{{ appointment.doctor.last_name }}</p>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Appointment Details</div>
+
+    <div class="card-body">
+      <p><strong>Scheduled Time: </strong>{{ appointment.appointment_date|date:"d.m.Y H:i" }}</p>
+      <p class="mb-0"><strong>Notes: </strong>{{ appointment.notes }}</p>
+    </div>
+  </div>
 {% endblock %}
