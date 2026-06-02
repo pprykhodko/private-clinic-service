@@ -25,13 +25,13 @@ def validate_appointment(doctor, appointment_date, instance_pk=None):
 
 
 class DoctorSearchForm(forms.Form):
-    username = forms.CharField(
+    doctor = forms.CharField(
         max_length=255,
         required=False,
         label="",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Search by username",
+                "placeholder": "Search by first or last name",
             }
         ),
     )
@@ -70,13 +70,13 @@ class PatientForm(forms.ModelForm):
 
 
 class PatientSearchForm(forms.Form):
-    last_name = forms.CharField(
+    patient = forms.CharField(
         max_length=255,
         required=False,
         label="",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Search by last name",
+                "placeholder": "Search by first or last name",
             }
         ),
     )

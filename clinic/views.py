@@ -47,9 +47,12 @@ class DoctorListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        username = self.request.GET.get("username")
-        if username:
-            return Doctor.objects.filter(username__icontains=username)
+        doctor = self.request.GET.get("doctor")
+        if doctor:
+            return Doctor.objects.filter(
+                Q(first_name__iregex=doctor.capitalize())
+                | Q(last_name__iregex=doctor.capitalize())
+            )
         return Doctor.objects.all()
 
 
@@ -75,10 +78,11 @@ class PatientListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        last_name = self.request.GET.get("last_name")
-        if last_name:
+        patient = self.request.GET.get("patient")
+        if patient:
             return Patient.objects.filter(
-                last_name__iregex=last_name.capitalize()
+                Q(first_name__iregex=patient.capitalize())
+                | Q(last_name__iregex=patient.capitalize())
             )
         return Patient.objects.all()
 
