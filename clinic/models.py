@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.html import mark_safe
 
 name_validator = RegexValidator(
-    regex=r"^[A-Za-zА-Яа-яІіЇїЄє'-]+$",
+    regex=r"^[A-Za-z'-]+$",
     message="Name can contain only letters, apostrophes and hyphens.",
 )
 
