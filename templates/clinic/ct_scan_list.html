@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -12,6 +13,24 @@
       + Add scan
     </a>
   </div>
+
+  <form method="get" action="" class="mb-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-end gap-2">
+          <div class="flex-grow-1">
+            {{ search_form|crispy }}
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Search
+          </button>
+          <a href="{{ request.path }}" class="btn btn-outline-secondary">
+            Clear
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
 
   {% if ct_scan_list %}
     <div class="card border-0 shadow-sm">
@@ -29,20 +48,14 @@
           <tbody>
           {% for ct_scan in ct_scan_list %}
             <tr>
-              <td>
-                <strong>#{{ ct_scan.id }}</strong>
-              </td>
+              <td><strong>#{{ ct_scan.id }}</strong></td>
               <td>
                 <a href="{{ ct_scan.image.url }}" target="_blank">
                   <img src="{{ ct_scan.image.url }}" alt="CT Scan" width="100" class="img-thumbnail">
                 </a>
               </td>
-              <td>
-                <strong>{{ ct_scan.patient }}</strong>
-              </td>
-              <td>
-                {{ ct_scan.scan_date|date:"d.m.Y H:i" }}
-              </td>
+              <td><strong>{{ ct_scan.patient }}</strong></td>
+              <td>{{ ct_scan.scan_date|date:"d.m.Y H:i" }}</td>
               <td class="text-center">
                 <a href="{% url 'clinic:ct-scan-detail' pk=ct_scan.pk %}" class="btn btn-sm btn-outline-primary">
                   Detail
@@ -57,6 +70,7 @@
         </table>
       </div>
     </div>
+    
     <div class="mt-4">
       {% include "includes/pagination.html" %}
     </div>
