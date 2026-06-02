@@ -1,24 +1,32 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
-  <h1>
-    {{ patient.first_name }} {{ patient.last_name }}
-    <a href="{% url 'clinic:patient-delete' pk=patient.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">
+        {{ patient.first_name }} {{ patient.last_name }}
+      </h1>
+    </div>
 
-    <a href="{% url 'clinic:patient-update' pk=patient.id %}" class="btn btn-secondary link-to-page">
-      Update
-    </a>
-  </h1>
+    <div>
+      <a href="{% url 'clinic:patient-update' pk=patient.pk %}" class="btn btn-outline-secondary">Update</a>
+      <a href="{% url 'clinic:patient-delete' pk=patient.pk %}" class="btn btn-outline-danger">Delete</a>
+      <a href="{% url 'clinic:patient-list' %}" class="btn btn-outline-primary">Back</a>
+    </div>
+  </div>
 
-  <hr>
-  <p><strong>First name:</strong> {{ patient.first_name }}</p>
-  <p><strong>Last name:</strong> {{ patient.last_name }}</p>
-  <p><strong>Birth Date:</strong> {{ patient.birth_date }}</p>
-  <p><strong>Phone Number:</strong> {{ patient.phone_number }}</p>
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Patient Information</div>
 
-  <h4><strong>Diagnosis:</strong></h4>
-  <hr>
-  {{ patient.diagnosis }}
+    <div class="card-body">
+      <p>First name: {{ patient.first_name }}</p>
+      <p>Last name: {{ patient.last_name }}</p>
+      <p>Birth Date: {{ patient.birth_date }}</p>
+      <p>Phone Number: {{ patient.phone_number }}</p>
+
+      <h5 class="mt-4">Diagnosis</h5>
+      <hr>
+      <p class="mb-0">{{ patient.diagnosis }}</p>
+    </div>
+  </div>
 {% endblock %}
