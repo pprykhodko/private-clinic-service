@@ -4,18 +4,17 @@ from django.utils import timezone
 from django.test import TestCase
 
 from clinic.models import Doctor, Patient, Appointment, CTScan
+from clinic.tests.constants import (
+    DOCTOR_DATA,
+    PATIENT_DATA,
+    ANOTHER_DOCTOR_DATA,
+    ANOTHER_PATIENT_DATA
+)
 
 
 class DoctorModelTest(TestCase):
     def setUp(self):
-        self.doctor = Doctor.objects.create_user(
-            username="john.smith",
-            password="test_password",
-            first_name="John",
-            last_name="Smith",
-            specialization="Urologist",
-            hire_date=date(2020, 1, 1),
-        )
+        self.doctor = Doctor.objects.create_user(**DOCTOR_DATA)
 
     def test_doctor_str(self):
         doctor = self.doctor
@@ -54,12 +53,7 @@ class DoctorModelTest(TestCase):
 
 class PatientModelTest(TestCase):
     def setUp(self):
-        self.patient = Patient.objects.create(
-            first_name="John",
-            last_name="Smith",
-            birth_date=date(1995, 5, 15),
-            phone_number="+380991234567",
-        )
+        self.patient = Patient.objects.create(**PATIENT_DATA)
 
     def test_patient_str(self):
         patient = self.patient
@@ -110,21 +104,9 @@ class PatientModelTest(TestCase):
 
 class AppointmentModelTest(TestCase):
     def setUp(self):
-        self.doctor = Doctor.objects.create_user(
-            username="john.smith",
-            password="test_password",
-            first_name="John",
-            last_name="Smith",
-            specialization="Urologist",
-            hire_date=date(2020, 1, 1),
-        )
+        self.doctor = Doctor.objects.create_user(**DOCTOR_DATA)
 
-        self.patient = Patient.objects.create(
-            first_name="John",
-            last_name="Doe",
-            birth_date=date(1995, 5, 15),
-            phone_number="+380991234567",
-        )
+        self.patient = Patient.objects.create(**PATIENT_DATA)
 
     def test_appointment_str(self):
         appointment = Appointment.objects.create(
@@ -158,12 +140,7 @@ class AppointmentModelTest(TestCase):
         )
         second_appointment = Appointment(
             doctor=self.doctor,
-            patient=Patient.objects.create(
-                first_name="Anna",
-                last_name="Doe",
-                birth_date=date(1990, 1, 1),
-                phone_number="+380501234567",
-            ),
+            patient=Patient.objects.create(**ANOTHER_PATIENT_DATA),
             appointment_date=second_appointment_date,
         )
         with self.assertRaisesMessage(
@@ -180,14 +157,7 @@ class AppointmentModelTest(TestCase):
             patient=self.patient,
             appointment_date=first_appointment_date,
         )
-        another_doctor = Doctor.objects.create_user(
-            username="another.doctor",
-            password="test_password",
-            first_name="Anna",
-            last_name="Doctor",
-            specialization="Radiologist",
-            hire_date=date(2020, 1, 1),
-        )
+        another_doctor = Doctor.objects.create_user(**ANOTHER_DOCTOR_DATA)
         second_appointment = Appointment(
             doctor=another_doctor,
             patient=self.patient,
@@ -202,12 +172,7 @@ class AppointmentModelTest(TestCase):
 
 class CTScanModelTest(TestCase):
     def setUp(self):
-        self.patient = Patient.objects.create(
-            first_name="John",
-            last_name="Doe",
-            birth_date=date(1995, 5, 15),
-            phone_number="+380991234567",
-        )
+        self.patient = Patient.objects.create(**PATIENT_DATA)
 
     def test_ct_scan_str(self):
         ct_scan = CTScan.objects.create(
