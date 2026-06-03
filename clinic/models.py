@@ -134,11 +134,11 @@ class Appointment(models.Model):
             )
         if doctor_conflict.exists():
             raise ValidationError(
-                "This doctor already has an appointment within 10 minutes."
+                "This doctor already has an appointment within 10 minutes"
             )
         if patient_conflict.exists():
             raise ValidationError(
-                "This patient already has an appointment within 10 minutes."
+                "This patient already has an appointment within 10 minutes"
             )
 
 
