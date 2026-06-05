@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Delete CT Scan</div>
+    
+    <div class="card-body">
+      <p>Are you sure you want to delete CT Scan #{{ ctscan.id }}?</p>
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <a href="{% url 'clinic:ct-scan-detail' pk=ctscan.pk %}" class="btn btn-outline-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,107 @@
+from django.urls import path
+
+from clinic.views import (
+    index,
+    DoctorListView,
+    DoctorDetailView,
+    PatientListView,
+    PatientCreateView,
+    PatientDetailView,
+    PatientUpdateView,
+    PatientDeleteView,
+    AppointmentListView,
+    AppointmentCreateView,
+    AppointmentDetailView,
+    AppointmentUpdateView,
+    AppointmentDeleteView,
+    CTScanListView,
+    CTScanCreateView,
+    CTScanDetailView,
+    CTScanDeleteView,
+)
+
+urlpatterns = [
+    path("", index, name="index"),
+    path(
+        "doctor/",
+        DoctorListView.as_view(),
+        name="doctor-list"
+    ),
+    path(
+        "doctor/<int:pk>/",
+        DoctorDetailView.as_view(),
+        name="doctor-detail"
+    ),
+    path(
+        "patient/",
+        PatientListView.as_view(),
+        name="patient-list"
+    ),
+    path(
+        "patient/create/",
+        PatientCreateView.as_view(),
+        name="patient-create"
+    ),
+    path(
+        "patient/<int:pk>/",
+        PatientDetailView.as_view(),
+        name="patient-detail"),
+    path(
+
+        "patient/<int:pk>/update/",
+        PatientUpdateView.as_view(),
+        name="patient-update"
+    ),
+    path(
+        "patient/<int:pk>/delete/",
+        PatientDeleteView.as_view(),
+        name="patient-delete"
+    ),
+    path(
+        "appointment/",
+        AppointmentListView.as_view(),
+        name="appointment-list"
+    ),
+    path(
+        "appointment/create/",
+        AppointmentCreateView.as_view(),
+        name="appointment-create",
+    ),
+    path(
+        "appointment/<int:pk>/",
+        AppointmentDetailView.as_view(),
+        name="appointment-detail",
+    ),
+    path(
+        "appointment/<int:pk>/update/",
+        AppointmentUpdateView.as_view(),
+        name="appointment-update",
+    ),
+    path(
+        "appointment/<int:pk>/delete/",
+        AppointmentDeleteView.as_view(),
+        name="appointment-delete",
+    ),
+    path(
+        "ct-scan/",
+        CTScanListView.as_view(),
+        name="ct-scan-list"
+    ),
+    path(
+        "ct-scan/create/",
+        CTScanCreateView.as_view(),
+        name="ct-scan-create"
+    ),
+    path(
+        "ct-scan/<int:pk>/",
+        CTScanDetailView.as_view(),
+        name="ct-scan-detail"
+    ),
+    path(
+        "ct-scan/<int:pk>/delete/",
+        CTScanDeleteView.as_view(),
+        name="ct-scan-delete"
+    ),
+]
+
+app_name = "clinic"

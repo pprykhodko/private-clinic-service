@@ -1,0 +1,16 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Delete Patient</div>
+    
+    <div class="card-body">
+      <p>Are you sure you want to delete patient {{ patient.first_name }} {{ patient.last_name }}?</p>
+      <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <a href="{% url 'clinic:patient-detail' pk=patient.pk %}" class="btn btn-outline-secondary">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

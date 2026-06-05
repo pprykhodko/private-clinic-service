@@ -1,0 +1,34 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">{{ patient.first_name }} {{ patient.last_name }}</h1>
+    </div>
+
+    <div>
+      <a href="{% url 'clinic:patient-update' pk=patient.pk %}" class="btn btn-outline-secondary">Update</a>
+      <a href="{% url 'clinic:patient-delete' pk=patient.pk %}" class="btn btn-outline-danger">Delete</a>
+      <a href="{% url 'clinic:patient-list' %}" class="btn btn-outline-primary">Back</a>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header">Patient Information</div>
+
+    <div class="card-body">
+      <p><strong>First name: </strong>{{ patient.first_name }}</p>
+      <p><strong>Last name: </strong>{{ patient.last_name }}</p>
+      <p><strong>Birth Date: </strong>{{ patient.birth_date }}</p>
+      <p class="mb-0"><strong>Phone Number: </strong>{{ patient.phone_number }}</p>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Diagnosis</div>
+
+    <div class="card-body">
+      <p class="mb-0">{{ patient.diagnosis }}</p>
+    </div>
+  </div>
+{% endblock %}

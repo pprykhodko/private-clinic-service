@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">Appointment #{{ appointment.id }}</h1>
+    </div>
+
+    <div>
+      <a href="{% url 'clinic:appointment-update' pk=appointment.pk %}" class="btn btn-outline-secondary">Update</a>
+      <a href="{% url 'clinic:appointment-delete' pk=appointment.pk %}" class="btn btn-outline-danger">Delete</a>
+      <a href="{% url 'clinic:appointment-list' %}" class="btn btn-outline-primary">Back</a>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header">Patient Information</div>
+
+    <div class="card-body">
+      <p><strong>First name: </strong>{{ appointment.patient.first_name }}</p>
+      <p><strong>Last name: </strong>{{ appointment.patient.last_name }}</p>
+      <p class="mb-0"><strong>Phone Number: </strong>{{ appointment.patient.phone_number }}</p>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header">Doctor Information</div>
+
+    <div class="card-body">
+      <p><strong>First name: </strong>{{ appointment.doctor.first_name }}</p>
+      <p class="mb-0"><strong>Last name: </strong>{{ appointment.doctor.last_name }}</p>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header">Appointment Details</div>
+
+    <div class="card-body">
+      <p><strong>Scheduled Time: </strong>{{ appointment.appointment_date|date:"d.m.Y H:i" }}</p>
+      <p class="mb-0"><strong>Notes: </strong>{{ appointment.notes }}</p>
+    </div>
+  </div>
+{% endblock %}

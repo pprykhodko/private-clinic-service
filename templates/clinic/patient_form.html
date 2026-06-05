@@ -1,0 +1,27 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="mb-4">
+    <h1 class="h3 mb-0">{{ object|yesno:"Update patient,Create patient" }}</h1>
+    <p class="text-muted mb-0">Fill in patient information</p>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="mt-4">
+          <input type="submit" value="Submit" class="btn btn-primary">
+
+          {% if object %}
+            <a href="{% url 'clinic:patient-detail' pk=object.pk %}" class="btn btn-outline-secondary">Cancel</a>
+          {% else %}
+            <a href="{% url 'clinic:patient-list' %}" class="btn btn-outline-secondary">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

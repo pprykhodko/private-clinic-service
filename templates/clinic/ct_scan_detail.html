@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">CT Scan #{{ ctscan.id }}</h1>
+    </div>
+
+    <div>
+      <a href="{% url 'clinic:ct-scan-delete' pk=ctscan.pk %}" class="btn btn-outline-danger">Delete</a>
+      <a href="{% url 'clinic:ct-scan-list' %}" class="btn btn-outline-primary">Back</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 mb-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header">CT Scan Image</div>
+
+        <div class="card-body text-center">
+          <img src="{{ ctscan.image.url }}" alt="CT Scan" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header">Scan Information</div>
+
+        <div class="card-body">
+          <p><strong>Patient: </strong>{{ ctscan.patient }}</p>
+          <p><strong>Scan date: </strong>{{ ctscan.scan_date|date:"d.m.Y H:i" }}</p>
+          <hr>
+          <h5>Description</h5>
+          <p class="mb-0">{{ ctscan.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

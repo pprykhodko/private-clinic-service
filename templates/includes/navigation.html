@@ -1,0 +1,29 @@
+{% load static %}
+
+<header class="header-global">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm sticky-top py-0">
+    <div class="container-fluid px-4 position-relative">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'clinic:index' %}">
+          <img src="{% static 'assets/img/favicon/favicon-32x32.png' %}" alt="ClinicFlow Logo" height="42" class="rounded-3">
+      </a>
+      <div class="position-absolute start-50 translate-middle-x">
+        <span class="navbar-brand fw-semibold fs-5 mb-0">ClinicFlow</span>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+
+        {% if user.is_authenticated %}
+          <span class="text-white">
+            {{ user.first_name }} {{ user.last_name }}
+          </span>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-link text-white text-decoration-none p-0">
+              <span class="fas fa-sign-out-alt me-1"></span>
+              Logout
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>

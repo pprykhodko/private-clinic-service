@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0">Appointments</h1>
+      <p class="text-muted mb-0">Scheduled patient visits</p>
+    </div>
+    <a href="{% url 'clinic:appointment-create' %}" class="btn btn-primary">
+      + Add appointment
+    </a>
+  </div>
+
+  <form method="get" action="" class="mb-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-end gap-2">
+          <div class="flex-grow-1">
+            {{ search_form|crispy }}
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Search
+          </button>
+          <a href="{{ request.path }}" class="btn btn-outline-secondary">
+            Clear
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% if appointment_list %}
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th class="text-center">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for appointment in appointment_list %}
+            <tr>
+              <td><strong>#{{ appointment.id }}</strong></td>
+              <td>{{ appointment.appointment_date|date:"d.m.Y H:i" }}</td>
+              <td><strong>{{ appointment.patient }}</strong></td>
+              <td>{{ appointment.doctor.first_name }} {{ appointment.doctor.last_name }}</td>
+              <td class="text-center">
+                <a href="{% url 'clinic:appointment-detail' pk=appointment.pk %}" class="btn btn-sm btn-outline-primary">
+                  Detail
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="mt-4">
+      {% include "includes/pagination.html" %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">There are no appointments yet.</div>
+  {% endif %}
+{% endblock %}
